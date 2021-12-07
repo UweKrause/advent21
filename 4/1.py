@@ -1,44 +1,10 @@
 from itertools import islice
-from pprint import pprint
 
 import numpy as np
 
-if __name__ == '__main__':
 
-    draws_all = []
-    boards = []
-
-    # parse input to numbers drawn and boards available
-    with open("input") as lines:
-
-        # first line gets special treatment
-        for line in islice(lines, 1):
-            draws_all += [int(x) for x in line.strip().split(sep=",")]
-
-        # Skip 1 empty line of input
-        _ = lines.readline()
-
-        # extract all the boards from remaining input
-        while True:
-            rows = []
-
-            # read following 5 lines from input
-            for line in islice(lines, 5):
-                rows += [int(i) for i in line.strip().split()]
-
-            # construct board
-            if rows:
-                assert len(rows) == 5 * 5
-                board = np.array(rows)
-                board.resize((5, 5))
-                boards.append(board)
-
-            # no input left, leave loop
-            else:
-                break
-
-            # Skip 1 line
-            _ = lines.readline()
+def main():
+    draws_all, boards = parse_input()
 
     draws = []
     found = False
@@ -50,32 +16,77 @@ if __name__ == '__main__':
             continue
 
         for board in boards:
-
-            for row in board:
-                assert len(set(row)) == 5
-                if set(row).issubset(draws):
-                    found = True
-
-            for col in board.transpose():
-                assert len(set(col)) == 5
-                if set(col).issubset(draws):
-                    found = True
+            found = check_board(board, draws)
 
             if found:
-                pprint(board)
-                print(draw, draws)
-
-                # calculate the sum of all unmarked numbers of the winning board
-                unmarked = []
-                for item in board.flat:
-                    if item not in draws:
-                        unmarked.append(item)
-
-                winner_sum = sum(unmarked)
+                winner_sum = calculate_score(board, draws)
 
                 print(draw * winner_sum)  # 34506
-
                 break
 
         if found:
             break
+
+
+def parse_input():
+    """parse input to numbers drawn and boards available"""
+
+    with open("input") as lines:
+
+        # first line contains all draws
+        draws_all = [int(x) for x in lines.readline().split(sep=",")]
+
+        # extract all the boards from remaining input
+        boards = []
+        while True:
+
+            rows = []
+
+            # read following lines from input
+            # (1 empty line, 5 lines with content)
+            for line in islice(lines, 1 + 5):
+                rows += [int(i) for i in line.split()]
+
+            if rows:
+                assert len(rows) == 5 * 5
+                board = np.resize(np.array(rows), (5, 5))
+                boards.append(board)
+            else:
+                # no input left, leave loop
+                break
+
+    return draws_all, boards
+
+
+def check_board(board, draws):
+    """
+    Checks if a board can win with regard to currently drawn numbers.
+    A board wins if all of the numbers of one row or one column are drawn.
+    """
+
+    # The rows of a transposed board are the columns of the not transposed board
+    return check_rows(board, draws) or check_rows(board.transpose(), draws)
+
+
+def check_rows(board, draws):
+    for row in board:
+        assert len(set(row)) == 5
+        if set(row).issubset(draws):
+            return True
+    return False
+
+
+def calculate_score(board, draws):
+    """calculate the sum of all unmarked numbers of a winning board"""
+    # todo: list comprehension
+
+    unmarked = []
+    for item in board.flat:
+        if item not in draws:
+            unmarked.append(item)
+
+    return sum(unmarked)
+
+
+if __name__ == '__main__':
+    main()
