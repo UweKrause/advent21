@@ -16,10 +16,10 @@ def main():
             continue
 
         for board in boards:
-            found = check_board(board, draws)
+            found = is_board_winning(board, draws)
 
             if found:
-                winner_sum = calculate_score(board, draws)
+                winner_sum = sum_of_unmarked_fields(board, draws)
 
                 print(draw * winner_sum)  # 34506
                 break
@@ -58,7 +58,7 @@ def parse_input():
     return draws_all, boards
 
 
-def check_board(board, draws):
+def is_board_winning(board, draws):
     """
     Checks if a board can win with regard to currently drawn numbers.
     A board wins if all of the numbers of one row or one column are drawn.
@@ -76,7 +76,7 @@ def check_rows(board, draws):
     return False
 
 
-def calculate_score(board, draws):
+def sum_of_unmarked_fields(board, draws):
     """calculate the sum of all unmarked numbers of a winning board"""
     # todo: list comprehension
 
