@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>1.py</title>
+<link rel="stylesheet" type="text/css" href="highlight.css">
+</head>
+<body class="hl">
+<pre class="hl"><span class="hl kwa">from</span> itertools <span class="hl kwa">import</span> islice
+
+<span class="hl kwa">import</span> numpy <span class="hl kwa">as</span> np
+
+
+<span class="hl kwa">def</span> <span class="hl kwd">main</span><span class="hl opt">():</span>
+    draws_all<span class="hl opt">,</span> boards <span class="hl opt">=</span> <span class="hl kwd">parse_input</span><span class="hl opt">()</span>
+
+    draws <span class="hl opt">= []</span>
+    found <span class="hl opt">=</span> <span class="hl kwa">False</span>
+    <span class="hl kwa">for</span> draw <span class="hl kwa">in</span> draws_all<span class="hl opt">:</span>
+        draws<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>draw<span class="hl opt">)</span>
+
+        <span class="hl slc"># dont investigate impossible cases</span>
+        <span class="hl kwa">if</span> <span class="hl kwb">len</span><span class="hl opt">(</span>draws<span class="hl opt">) &lt;</span> <span class="hl num">5</span><span class="hl opt">:</span>
+            <span class="hl kwa">continue</span>
+
+        <span class="hl kwa">for</span> board <span class="hl kwa">in</span> boards<span class="hl opt">:</span>
+            found <span class="hl opt">=</span> <span class="hl kwd">is_board_winning</span><span class="hl opt">(</span>board<span class="hl opt">,</span> draws<span class="hl opt">)</span>
+
+            <span class="hl kwa">if</span> found<span class="hl opt">:</span>
+                winner_sum <span class="hl opt">=</span> <span class="hl kwd">sum_of_unmarked_fields</span><span class="hl opt">(</span>board<span class="hl opt">,</span> draws<span class="hl opt">)</span>
+
+                <span class="hl kwa">print</span><span class="hl opt">(</span>draw <span class="hl opt">*</span> winner_sum<span class="hl opt">)</span>  <span class="hl slc"># 34506</span>
+                <span class="hl kwa">break</span>
+
+        <span class="hl kwa">if</span> found<span class="hl opt">:</span>
+            <span class="hl kwa">break</span>
+
+
+<span class="hl kwa">def</span> <span class="hl kwd">parse_input</span><span class="hl opt">():</span>
+    <span class="hl sng">&quot;&quot;&quot;parse input to numbers drawn and boards available&quot;&quot;&quot;</span>
+
+    with <span class="hl kwb">open</span><span class="hl opt">(</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">)</span> <span class="hl kwa">as</span> lines<span class="hl opt">:</span>
+
+        <span class="hl slc"># first line contains all draws</span>
+        draws_all <span class="hl opt">= [</span><span class="hl kwb">int</span><span class="hl opt">(</span>x<span class="hl opt">)</span> <span class="hl kwa">for</span> x <span class="hl kwa">in</span> lines<span class="hl opt">.</span><span class="hl kwd">readline</span><span class="hl opt">().</span><span class="hl kwd">split</span><span class="hl opt">(</span>sep<span class="hl opt">=</span><span class="hl sng">&quot;,&quot;</span><span class="hl opt">)]</span>
+
+        <span class="hl slc"># extract all the boards from remaining input</span>
+        boards <span class="hl opt">= []</span>
+        <span class="hl kwa">while True</span><span class="hl opt">:</span>
+
+            rows <span class="hl opt">= []</span>
+
+            <span class="hl slc"># read following lines from input</span>
+            <span class="hl slc"># (1 empty line, 5 lines with content)</span>
+            <span class="hl kwa">for</span> line <span class="hl kwa">in</span> <span class="hl kwd">islice</span><span class="hl opt">(</span>lines<span class="hl opt">,</span> <span class="hl num">1</span> <span class="hl opt">+</span> <span class="hl num">5</span><span class="hl opt">):</span>
+                rows <span class="hl opt">+= [</span><span class="hl kwb">int</span><span class="hl opt">(</span>i<span class="hl opt">)</span> <span class="hl kwa">for</span> i <span class="hl kwa">in</span> line<span class="hl opt">.</span><span class="hl kwd">split</span><span class="hl opt">()]</span>
+
+            <span class="hl kwa">if</span> rows<span class="hl opt">:</span>
+                <span class="hl kwa">assert</span> <span class="hl kwb">len</span><span class="hl opt">(</span>rows<span class="hl opt">) ==</span> <span class="hl num">5</span> <span class="hl opt">*</span> <span class="hl num">5</span>
+                board <span class="hl opt">=</span> np<span class="hl opt">.</span><span class="hl kwd">resize</span><span class="hl opt">(</span>np<span class="hl opt">.</span><span class="hl kwd">array</span><span class="hl opt">(</span>rows<span class="hl opt">), (</span><span class="hl num">5</span><span class="hl opt">,</span> <span class="hl num">5</span><span class="hl opt">))</span>
+                boards<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>board<span class="hl opt">)</span>
+            <span class="hl kwa">else</span><span class="hl opt">:</span>
+                <span class="hl slc"># no input left, leave loop</span>
+                <span class="hl kwa">break</span>
+
+    <span class="hl kwa">return</span> draws_all<span class="hl opt">,</span> boards
+
+
+<span class="hl kwa">def</span> <span class="hl kwd">is_board_winning</span><span class="hl opt">(</span>board<span class="hl opt">,</span> draws<span class="hl opt">):</span>
+    <span class="hl sng">&quot;&quot;&quot;</span>
+<span class="hl sng">    Checks if a board can win with regard to currently drawn numbers.</span>
+<span class="hl sng">    A board wins if all of the numbers of one row or one column are drawn.</span>
+<span class="hl sng">    &quot;&quot;&quot;</span>
+
+    <span class="hl slc"># The rows of a transposed board are the columns of the not transposed board</span>
+    <span class="hl kwa">return</span> <span class="hl kwd">check_rows</span><span class="hl opt">(</span>board<span class="hl opt">,</span> draws<span class="hl opt">)</span> <span class="hl kwa">or</span> <span class="hl kwd">check_rows</span><span class="hl opt">(</span>board<span class="hl opt">.</span><span class="hl kwd">transpose</span><span class="hl opt">(),</span> draws<span class="hl opt">)</span>
+
+
+<span class="hl kwa">def</span> <span class="hl kwd">check_rows</span><span class="hl opt">(</span>board<span class="hl opt">,</span> draws<span class="hl opt">):</span>
+    <span class="hl kwa">for</span> row <span class="hl kwa">in</span> board<span class="hl opt">:</span>
+        <span class="hl kwa">assert</span> <span class="hl kwb">len</span><span class="hl opt">(</span><span class="hl kwb">set</span><span class="hl opt">(</span>row<span class="hl opt">)) ==</span> <span class="hl num">5</span>
+        <span class="hl kwa">if</span> <span class="hl kwb">set</span><span class="hl opt">(</span>row<span class="hl opt">).</span><span class="hl kwd">issubset</span><span class="hl opt">(</span>draws<span class="hl opt">):</span>
+            <span class="hl kwa">return True</span>
+    <span class="hl kwa">return False</span>
+
+
+<span class="hl kwa">def</span> <span class="hl kwd">sum_of_unmarked_fields</span><span class="hl opt">(</span>board<span class="hl opt">,</span> draws<span class="hl opt">):</span>
+    <span class="hl sng">&quot;&quot;&quot;calculate the sum of all unmarked numbers of a winning board&quot;&quot;&quot;</span>
+    <span class="hl slc"># todo: list comprehension</span>
+
+    unmarked <span class="hl opt">= []</span>
+    <span class="hl kwa">for</span> item <span class="hl kwa">in</span> board<span class="hl opt">.</span>flat<span class="hl opt">:</span>
+        <span class="hl kwa">if</span> item <span class="hl kwa">not in</span> draws<span class="hl opt">:</span>
+            unmarked<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>item<span class="hl opt">)</span>
+
+    <span class="hl kwa">return</span> <span class="hl kwb">sum</span><span class="hl opt">(</span>unmarked<span class="hl opt">)</span>
+
+
+<span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
+    <span class="hl kwd">main</span><span class="hl opt">()</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 4.1, http://www.andre-simon.de/-->
