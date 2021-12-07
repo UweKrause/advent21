@@ -49,51 +49,53 @@
 <span class="hl lin">   41 </span>            <span class="hl slc"># extract max x and max y values to later determine the size of map</span>
 <span class="hl lin">   42 </span>            highest_x<span class="hl opt">,</span> highest_y <span class="hl opt">=</span> <span class="hl kwd">highest</span><span class="hl opt">(</span>highest_x<span class="hl opt">,</span> highest_y<span class="hl opt">,</span> x1<span class="hl opt">,</span> x2<span class="hl opt">,</span> y1<span class="hl opt">,</span> y2<span class="hl opt">)</span>
 <span class="hl lin">   43 </span>
-<span class="hl lin">   44 </span>            <span class="hl slc"># calculate coordinates of line</span>
-<span class="hl lin">   45 </span>            xes <span class="hl opt">=</span> np<span class="hl opt">.</span><span class="hl kwd">linspace</span><span class="hl opt">(</span>x1<span class="hl opt">,</span> x2<span class="hl opt">,</span> <span class="hl kwb">abs</span><span class="hl opt">(</span>x1 <span class="hl opt">-</span> x2<span class="hl opt">) +</span> <span class="hl num">1</span><span class="hl opt">)</span>
-<span class="hl lin">   46 </span>            ypsilons <span class="hl opt">=</span> np<span class="hl opt">.</span><span class="hl kwd">linspace</span><span class="hl opt">(</span>y1<span class="hl opt">,</span> y2<span class="hl opt">,</span> <span class="hl kwb">abs</span><span class="hl opt">(</span>y1 <span class="hl opt">-</span> y2<span class="hl opt">) +</span> <span class="hl num">1</span><span class="hl opt">)</span>
+<span class="hl lin">   44 </span>            <span class="hl slc"># take care of the direction of the line</span>
+<span class="hl lin">   45 </span>            stride_1 <span class="hl opt">=</span> <span class="hl num">1</span> <span class="hl kwa">if</span> x1 <span class="hl opt">&lt;=</span> x2 <span class="hl kwa">else</span> <span class="hl opt">-</span><span class="hl num">1</span>
+<span class="hl lin">   46 </span>            stride_2 <span class="hl opt">=</span> <span class="hl num">1</span> <span class="hl kwa">if</span> y1 <span class="hl opt">&lt;=</span> y2 <span class="hl kwa">else</span> <span class="hl opt">-</span><span class="hl num">1</span>
 <span class="hl lin">   47 </span>
 <span class="hl lin">   48 </span>            <span class="hl slc"># append the points to the vent</span>
-<span class="hl lin">   49 </span>            vent <span class="hl opt">= []</span>
-<span class="hl lin">   50 </span>
-<span class="hl lin">   51 </span>            <span class="hl kwa">if</span> <span class="hl kwb">len</span><span class="hl opt">(</span>xes<span class="hl opt">) ==</span> <span class="hl num">1</span> <span class="hl kwa">or</span> <span class="hl kwb">len</span><span class="hl opt">(</span>ypsilons<span class="hl opt">) ==</span> <span class="hl num">1</span><span class="hl opt">:</span>
-<span class="hl lin">   52 </span>                <span class="hl slc"># straight line</span>
-<span class="hl lin">   53 </span>                <span class="hl kwa">for</span> x <span class="hl kwa">in</span> xes<span class="hl opt">:</span>
-<span class="hl lin">   54 </span>                    <span class="hl kwa">for</span> y <span class="hl kwa">in</span> ypsilons<span class="hl opt">:</span>
-<span class="hl lin">   55 </span>                        point <span class="hl opt">= (</span><span class="hl kwb">int</span><span class="hl opt">(</span>x<span class="hl opt">),</span> <span class="hl kwb">int</span><span class="hl opt">(</span>y<span class="hl opt">))</span>
-<span class="hl lin">   56 </span>                        vent<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>point<span class="hl opt">)</span>
-<span class="hl lin">   57 </span>            <span class="hl kwa">else</span><span class="hl opt">:</span>
-<span class="hl lin">   58 </span>                <span class="hl slc"># diagonal</span>
-<span class="hl lin">   59 </span>                <span class="hl kwa">for</span> x<span class="hl opt">,</span> y <span class="hl kwa">in</span> <span class="hl kwb">zip</span><span class="hl opt">(</span>xes<span class="hl opt">,</span> ypsilons<span class="hl opt">):</span>
-<span class="hl lin">   60 </span>                    point <span class="hl opt">= (</span><span class="hl kwb">int</span><span class="hl opt">(</span>x<span class="hl opt">),</span> <span class="hl kwb">int</span><span class="hl opt">(</span>y<span class="hl opt">))</span>
-<span class="hl lin">   61 </span>                    vent<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>point<span class="hl opt">)</span>
-<span class="hl lin">   62 </span>
-<span class="hl lin">   63 </span>            <span class="hl slc"># append the vent to the vents</span>
-<span class="hl lin">   64 </span>            vents<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>vent<span class="hl opt">)</span>
-<span class="hl lin">   65 </span>
-<span class="hl lin">   66 </span>    <span class="hl kwa">return</span> highest_x<span class="hl opt">,</span> highest_y<span class="hl opt">,</span> vents
+<span class="hl lin">   49 </span>            xes <span class="hl opt">=</span> <span class="hl kwb">range</span><span class="hl opt">(</span>x1<span class="hl opt">,</span> x2 <span class="hl opt">+</span> stride_1<span class="hl opt">,</span> stride_1<span class="hl opt">)</span>
+<span class="hl lin">   50 </span>            ypsilons <span class="hl opt">=</span> <span class="hl kwb">range</span><span class="hl opt">(</span>y1<span class="hl opt">,</span> y2 <span class="hl opt">+</span> stride_2<span class="hl opt">,</span> stride_2<span class="hl opt">)</span>
+<span class="hl lin">   51 </span>            vent <span class="hl opt">= []</span>
+<span class="hl lin">   52 </span>
+<span class="hl lin">   53 </span>            <span class="hl kwa">if</span> <span class="hl kwb">len</span><span class="hl opt">(</span>xes<span class="hl opt">) ==</span> <span class="hl num">1</span> <span class="hl kwa">or</span> <span class="hl kwb">len</span><span class="hl opt">(</span>ypsilons<span class="hl opt">) ==</span> <span class="hl num">1</span><span class="hl opt">:</span>
+<span class="hl lin">   54 </span>                <span class="hl slc"># straight line</span>
+<span class="hl lin">   55 </span>                <span class="hl kwa">for</span> x <span class="hl kwa">in</span> xes<span class="hl opt">:</span>
+<span class="hl lin">   56 </span>                    <span class="hl kwa">for</span> y <span class="hl kwa">in</span> ypsilons<span class="hl opt">:</span>
+<span class="hl lin">   57 </span>                        point <span class="hl opt">= (</span><span class="hl kwb">int</span><span class="hl opt">(</span>x<span class="hl opt">),</span> <span class="hl kwb">int</span><span class="hl opt">(</span>y<span class="hl opt">))</span>
+<span class="hl lin">   58 </span>                        vent<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>point<span class="hl opt">)</span>
+<span class="hl lin">   59 </span>            <span class="hl kwa">else</span><span class="hl opt">:</span>
+<span class="hl lin">   60 </span>                <span class="hl slc"># diagonal</span>
+<span class="hl lin">   61 </span>                <span class="hl kwa">for</span> x<span class="hl opt">,</span> y <span class="hl kwa">in</span> <span class="hl kwb">zip</span><span class="hl opt">(</span>xes<span class="hl opt">,</span> ypsilons<span class="hl opt">):</span>
+<span class="hl lin">   62 </span>                    point <span class="hl opt">= (</span><span class="hl kwb">int</span><span class="hl opt">(</span>x<span class="hl opt">),</span> <span class="hl kwb">int</span><span class="hl opt">(</span>y<span class="hl opt">))</span>
+<span class="hl lin">   63 </span>                    vent<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>point<span class="hl opt">)</span>
+<span class="hl lin">   64 </span>
+<span class="hl lin">   65 </span>            <span class="hl slc"># append the vent to the vents</span>
+<span class="hl lin">   66 </span>            vents<span class="hl opt">.</span><span class="hl kwd">append</span><span class="hl opt">(</span>vent<span class="hl opt">)</span>
 <span class="hl lin">   67 </span>
-<span class="hl lin">   68 </span>
-<span class="hl lin">   69 </span><span class="hl kwa">def</span> <span class="hl kwd">highest</span><span class="hl opt">(</span>highest_x<span class="hl opt">,</span> highest_y<span class="hl opt">,</span> x1<span class="hl opt">,</span> x2<span class="hl opt">,</span> y1<span class="hl opt">,</span> y2<span class="hl opt">):</span>
-<span class="hl lin">   70 </span>    <span class="hl slc"># yes, i am open for suggestions</span>
-<span class="hl lin">   71 </span>
-<span class="hl lin">   72 </span>    <span class="hl kwa">if</span> x1 <span class="hl opt">&gt;</span> highest_x<span class="hl opt">:</span>
-<span class="hl lin">   73 </span>        highest_x <span class="hl opt">=</span> x1
-<span class="hl lin">   74 </span>
-<span class="hl lin">   75 </span>    <span class="hl kwa">if</span> x2 <span class="hl opt">&gt;</span> highest_x<span class="hl opt">:</span>
-<span class="hl lin">   76 </span>        highest_x <span class="hl opt">=</span> x2
-<span class="hl lin">   77 </span>
-<span class="hl lin">   78 </span>    <span class="hl kwa">if</span> y1 <span class="hl opt">&gt;</span> highest_y<span class="hl opt">:</span>
-<span class="hl lin">   79 </span>        highest_y <span class="hl opt">=</span> y1
-<span class="hl lin">   80 </span>
-<span class="hl lin">   81 </span>    <span class="hl kwa">if</span> y2 <span class="hl opt">&gt;</span> highest_y<span class="hl opt">:</span>
-<span class="hl lin">   82 </span>        highest_y <span class="hl opt">=</span> y2
-<span class="hl lin">   83 </span>
-<span class="hl lin">   84 </span>    <span class="hl kwa">return</span> highest_x<span class="hl opt">,</span> highest_y
+<span class="hl lin">   68 </span>    <span class="hl kwa">return</span> highest_x<span class="hl opt">,</span> highest_y<span class="hl opt">,</span> vents
+<span class="hl lin">   69 </span>
+<span class="hl lin">   70 </span>
+<span class="hl lin">   71 </span><span class="hl kwa">def</span> <span class="hl kwd">highest</span><span class="hl opt">(</span>highest_x<span class="hl opt">,</span> highest_y<span class="hl opt">,</span> x1<span class="hl opt">,</span> x2<span class="hl opt">,</span> y1<span class="hl opt">,</span> y2<span class="hl opt">):</span>
+<span class="hl lin">   72 </span>    <span class="hl slc"># yes, i am open for suggestions</span>
+<span class="hl lin">   73 </span>
+<span class="hl lin">   74 </span>    <span class="hl kwa">if</span> x1 <span class="hl opt">&gt;</span> highest_x<span class="hl opt">:</span>
+<span class="hl lin">   75 </span>        highest_x <span class="hl opt">=</span> x1
+<span class="hl lin">   76 </span>
+<span class="hl lin">   77 </span>    <span class="hl kwa">if</span> x2 <span class="hl opt">&gt;</span> highest_x<span class="hl opt">:</span>
+<span class="hl lin">   78 </span>        highest_x <span class="hl opt">=</span> x2
+<span class="hl lin">   79 </span>
+<span class="hl lin">   80 </span>    <span class="hl kwa">if</span> y1 <span class="hl opt">&gt;</span> highest_y<span class="hl opt">:</span>
+<span class="hl lin">   81 </span>        highest_y <span class="hl opt">=</span> y1
+<span class="hl lin">   82 </span>
+<span class="hl lin">   83 </span>    <span class="hl kwa">if</span> y2 <span class="hl opt">&gt;</span> highest_y<span class="hl opt">:</span>
+<span class="hl lin">   84 </span>        highest_y <span class="hl opt">=</span> y2
 <span class="hl lin">   85 </span>
-<span class="hl lin">   86 </span>
-<span class="hl lin">   87 </span><span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
-<span class="hl lin">   88 </span>    <span class="hl kwd">main</span><span class="hl opt">()</span>
+<span class="hl lin">   86 </span>    <span class="hl kwa">return</span> highest_x<span class="hl opt">,</span> highest_y
+<span class="hl lin">   87 </span>
+<span class="hl lin">   88 </span>
+<span class="hl lin">   89 </span><span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
+<span class="hl lin">   90 </span>    <span class="hl kwd">main</span><span class="hl opt">()</span>
 </pre>
 </body>
 </html>

@@ -41,11 +41,13 @@ def parse_input():
             # extract max x and max y values to later determine the size of map
             highest_x, highest_y = highest(highest_x, highest_y, x1, x2, y1, y2)
 
-            # calculate coordinates of line
-            xes = np.linspace(x1, x2, abs(x1 - x2) + 1)
-            ypsilons = np.linspace(y1, y2, abs(y1 - y2) + 1)
+            # take care of the direction of the line
+            stride_1 = 1 if x1 <= x2 else -1
+            stride_2 = 1 if y1 <= y2 else -1
 
             # append the points to the vent
+            xes = range(x1, x2 + stride_1, stride_1)
+            ypsilons = range(y1, y2 + stride_2, stride_2)
             vent = []
 
             if len(xes) == 1 or len(ypsilons) == 1:

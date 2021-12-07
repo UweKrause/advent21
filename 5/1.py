@@ -27,9 +27,7 @@ def parse_input():
     vents = []
 
     with open("input") as lines:
-
         for line in lines:
-
             regex = re.compile(r'(\d+),(\d+)+ -> (\d+)+,(\d+)+')
             regex_groups = regex.search(line.strip())
             coords = \
