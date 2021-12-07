@@ -23,7 +23,7 @@ pre.hl	{ color:#839496; background-color:#002b36; font-size:10pt; font-family:'C
 .hl.kwf { color:#859900; }
 
 iframe.code-include {
-    height:400px;
+    height:500px;
     display: block;
     width:90%;
     margin: auto;
