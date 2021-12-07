@@ -1,4 +1,8 @@
-days_to_simulate = 80
+days_to_simulate = 256
+
+
+# solution takes ages (does it finish at all?)
+# TODO: implement better
 
 
 def main():
