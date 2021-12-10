@@ -2,7 +2,8 @@ import pandas as pd
 
 FILE = "input"
 
-if __name__ == '__main__':
+
+def main():
     df = pd.read_csv(FILE, names=["direction", "value"], sep=" ")
     grouped = df.groupby(["direction"]).sum()
 
@@ -13,4 +14,8 @@ if __name__ == '__main__':
     position_depth = 0 + down - up
     position_horizontal = 0 + forward
 
-    print(position_horizontal * position_depth)  # 2039256
+    return position_horizontal * position_depth
+
+
+if __name__ == '__main__':
+    print(main())  # 2039256

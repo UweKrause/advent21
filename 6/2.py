@@ -37,7 +37,7 @@ def main():
 
         # print(f"day {day}: {sum(fish_count.values())}: {fish_count}")
 
-    print(sum(fish_count.values()))  # 1770823541496
+    return sum(fish_count.values())
 
 
 def parse_input():
@@ -47,4 +47,4 @@ def parse_input():
 
 
 if __name__ == '__main__':
-    main()
+    print(main())  # 1770823541496

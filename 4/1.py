@@ -9,7 +9,6 @@ def main():
     draws_all, boards = parse_input()
 
     draws = []
-    found = False
     for draw in draws_all:
         draws.append(draw)
 
@@ -18,16 +17,8 @@ def main():
             continue
 
         for board in boards:
-            found = is_board_winning(board, draws)
-
-            if found:
-                winner_sum = sum_of_unmarked_fields(board, draws)
-
-                print(draw * winner_sum)  # 34506
-                break
-
-        if found:
-            break
+            if is_board_winning(board, draws):
+                return draw * sum_of_unmarked_fields(board, draws)
 
 
 def parse_input():
@@ -71,6 +62,10 @@ def is_board_winning(board, draws):
 
 
 def check_rows(board, draws):
+    """
+    Checks for the rows of a board, if they are fully drawn.
+    If a (complete) row is a subset of the drawn numbers, it was fully drawn.
+    """
     for row in board:
         assert len(set(row)) == 5
         if set(row).issubset(draws):
@@ -91,4 +86,4 @@ def sum_of_unmarked_fields(board, draws):
 
 
 if __name__ == '__main__':
-    main()
+    print(main())  # 34506

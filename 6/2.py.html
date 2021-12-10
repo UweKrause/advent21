@@ -6,54 +6,56 @@
 <link rel="stylesheet" type="text/css" href="highlight.css">
 </head>
 <body class="hl">
-<pre class="hl"><span class="hl lin">    1 </span>days_to_simulate <span class="hl opt">=</span> <span class="hl num">256</span>
+<pre class="hl"><span class="hl lin">    1 </span>FILE <span class="hl opt">=</span> <span class="hl sng">&quot;input&quot;</span>
 <span class="hl lin">    2 </span>
-<span class="hl lin">    3 </span>
-<span class="hl lin">    4 </span><span class="hl kwa">def</span> <span class="hl kwd">main</span><span class="hl opt">():</span>
-<span class="hl lin">    5 </span>    <span class="hl sng">&quot;&quot;&quot;</span>
-<span class="hl lin">    6 </span><span class="hl sng">    Instead of simulating all the fish,</span>
-<span class="hl lin">    7 </span><span class="hl sng">    this solution just keeps track of the actual number of fish and applies the given rules to them.</span>
-<span class="hl lin">    8 </span><span class="hl sng"></span>
-<span class="hl lin">    9 </span><span class="hl sng">    (There is a shorter way to write this, using something like `new_fish := old_fish.pop(0).)</span>
-<span class="hl lin">   10 </span><span class="hl sng">    &quot;&quot;&quot;</span>
-<span class="hl lin">   11 </span>
-<span class="hl lin">   12 </span>    fish_swarm <span class="hl opt">=</span> <span class="hl kwd">parse_input</span><span class="hl opt">()</span>
+<span class="hl lin">    3 </span>days_to_simulate <span class="hl opt">=</span> <span class="hl num">256</span>
+<span class="hl lin">    4 </span>
+<span class="hl lin">    5 </span>
+<span class="hl lin">    6 </span><span class="hl kwa">def</span> <span class="hl kwd">main</span><span class="hl opt">():</span>
+<span class="hl lin">    7 </span>    <span class="hl sng">&quot;&quot;&quot;</span>
+<span class="hl lin">    8 </span><span class="hl sng">    Instead of simulating all the fish,</span>
+<span class="hl lin">    9 </span><span class="hl sng">    this solution just keeps track of the actual number of fish and applies the given rules to them.</span>
+<span class="hl lin">   10 </span><span class="hl sng"></span>
+<span class="hl lin">   11 </span><span class="hl sng">    (There is a shorter way to write this, using something like `new_fish := old_fish.pop(0).)</span>
+<span class="hl lin">   12 </span><span class="hl sng">    &quot;&quot;&quot;</span>
 <span class="hl lin">   13 </span>
-<span class="hl lin">   14 </span>    fish_count <span class="hl opt">= {}</span>
+<span class="hl lin">   14 </span>    fish_swarm <span class="hl opt">=</span> <span class="hl kwd">parse_input</span><span class="hl opt">()</span>
 <span class="hl lin">   15 </span>
-<span class="hl lin">   16 </span>    <span class="hl kwa">for</span> timer <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span><span class="hl num">9</span><span class="hl opt">):</span>
-<span class="hl lin">   17 </span>        fish_count<span class="hl opt">[</span>timer<span class="hl opt">] =</span> fish_swarm<span class="hl opt">.</span><span class="hl kwd">count</span><span class="hl opt">(</span>timer<span class="hl opt">)</span>
-<span class="hl lin">   18 </span>
-<span class="hl lin">   19 </span>    <span class="hl kwa">for</span> day <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span><span class="hl num">1</span><span class="hl opt">,</span> days_to_simulate <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">):</span>
-<span class="hl lin">   20 </span>        fish_count_zeroes <span class="hl opt">=</span> fish_count<span class="hl opt">[</span><span class="hl num">0</span><span class="hl opt">]</span>
-<span class="hl lin">   21 </span>
-<span class="hl lin">   22 </span>        <span class="hl slc"># each other number [1-8] decreases by 1 if it was present at the start of the day</span>
-<span class="hl lin">   23 </span>        fish_count<span class="hl opt">[</span><span class="hl num">0</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">1</span><span class="hl opt">]</span>
-<span class="hl lin">   24 </span>        fish_count<span class="hl opt">[</span><span class="hl num">1</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">2</span><span class="hl opt">]</span>
-<span class="hl lin">   25 </span>        fish_count<span class="hl opt">[</span><span class="hl num">2</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">3</span><span class="hl opt">]</span>
-<span class="hl lin">   26 </span>        fish_count<span class="hl opt">[</span><span class="hl num">3</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">4</span><span class="hl opt">]</span>
-<span class="hl lin">   27 </span>        fish_count<span class="hl opt">[</span><span class="hl num">4</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">5</span><span class="hl opt">]</span>
-<span class="hl lin">   28 </span>        fish_count<span class="hl opt">[</span><span class="hl num">5</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">6</span><span class="hl opt">]</span>
-<span class="hl lin">   29 </span>        fish_count<span class="hl opt">[</span><span class="hl num">6</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">7</span><span class="hl opt">]</span>
-<span class="hl lin">   30 </span>        fish_count<span class="hl opt">[</span><span class="hl num">7</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">8</span><span class="hl opt">]</span>
-<span class="hl lin">   31 </span>
-<span class="hl lin">   32 </span>        <span class="hl slc"># Each day, a 0 becomes a 6 and adds a new 8 to the end of the list</span>
-<span class="hl lin">   33 </span>        fish_count<span class="hl opt">[</span><span class="hl num">6</span><span class="hl opt">] +=</span> fish_count_zeroes
-<span class="hl lin">   34 </span>        fish_count<span class="hl opt">[</span><span class="hl num">8</span><span class="hl opt">] =</span> fish_count_zeroes
-<span class="hl lin">   35 </span>
-<span class="hl lin">   36 </span>        <span class="hl slc"># print(f&quot;day {day}: {sum(fish_count.values())}: {fish_count}&quot;)</span>
+<span class="hl lin">   16 </span>    fish_count <span class="hl opt">= {}</span>
+<span class="hl lin">   17 </span>
+<span class="hl lin">   18 </span>    <span class="hl kwa">for</span> timer <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span><span class="hl num">9</span><span class="hl opt">):</span>
+<span class="hl lin">   19 </span>        fish_count<span class="hl opt">[</span>timer<span class="hl opt">] =</span> fish_swarm<span class="hl opt">.</span><span class="hl kwd">count</span><span class="hl opt">(</span>timer<span class="hl opt">)</span>
+<span class="hl lin">   20 </span>
+<span class="hl lin">   21 </span>    <span class="hl kwa">for</span> day <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span><span class="hl num">1</span><span class="hl opt">,</span> days_to_simulate <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">):</span>
+<span class="hl lin">   22 </span>        fish_count_zeroes <span class="hl opt">=</span> fish_count<span class="hl opt">[</span><span class="hl num">0</span><span class="hl opt">]</span>
+<span class="hl lin">   23 </span>
+<span class="hl lin">   24 </span>        <span class="hl slc"># each other number [1-8] decreases by 1 if it was present at the start of the day</span>
+<span class="hl lin">   25 </span>        fish_count<span class="hl opt">[</span><span class="hl num">0</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">1</span><span class="hl opt">]</span>
+<span class="hl lin">   26 </span>        fish_count<span class="hl opt">[</span><span class="hl num">1</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">2</span><span class="hl opt">]</span>
+<span class="hl lin">   27 </span>        fish_count<span class="hl opt">[</span><span class="hl num">2</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">3</span><span class="hl opt">]</span>
+<span class="hl lin">   28 </span>        fish_count<span class="hl opt">[</span><span class="hl num">3</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">4</span><span class="hl opt">]</span>
+<span class="hl lin">   29 </span>        fish_count<span class="hl opt">[</span><span class="hl num">4</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">5</span><span class="hl opt">]</span>
+<span class="hl lin">   30 </span>        fish_count<span class="hl opt">[</span><span class="hl num">5</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">6</span><span class="hl opt">]</span>
+<span class="hl lin">   31 </span>        fish_count<span class="hl opt">[</span><span class="hl num">6</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">7</span><span class="hl opt">]</span>
+<span class="hl lin">   32 </span>        fish_count<span class="hl opt">[</span><span class="hl num">7</span><span class="hl opt">] =</span> fish_count<span class="hl opt">[</span><span class="hl num">8</span><span class="hl opt">]</span>
+<span class="hl lin">   33 </span>
+<span class="hl lin">   34 </span>        <span class="hl slc"># Each day, a 0 becomes a 6 and adds a new 8 to the end of the list</span>
+<span class="hl lin">   35 </span>        fish_count<span class="hl opt">[</span><span class="hl num">6</span><span class="hl opt">] +=</span> fish_count_zeroes
+<span class="hl lin">   36 </span>        fish_count<span class="hl opt">[</span><span class="hl num">8</span><span class="hl opt">] =</span> fish_count_zeroes
 <span class="hl lin">   37 </span>
-<span class="hl lin">   38 </span>    <span class="hl kwa">print</span><span class="hl opt">(</span><span class="hl kwb">sum</span><span class="hl opt">(</span>fish_count<span class="hl opt">.</span><span class="hl kwd">values</span><span class="hl opt">()))</span>  <span class="hl slc"># 1770823541496</span>
+<span class="hl lin">   38 </span>        <span class="hl slc"># print(f&quot;day {day}: {sum(fish_count.values())}: {fish_count}&quot;)</span>
 <span class="hl lin">   39 </span>
-<span class="hl lin">   40 </span>
-<span class="hl lin">   41 </span><span class="hl kwa">def</span> <span class="hl kwd">parse_input</span><span class="hl opt">():</span>
-<span class="hl lin">   42 </span>    with <span class="hl kwb">open</span><span class="hl opt">(</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">)</span> <span class="hl kwa">as</span> lines<span class="hl opt">:</span>
-<span class="hl lin">   43 </span>        <span class="hl kwa">for</span> line <span class="hl kwa">in</span> lines<span class="hl opt">:</span>
-<span class="hl lin">   44 </span>            <span class="hl kwa">return</span> <span class="hl opt">[</span><span class="hl kwb">int</span><span class="hl opt">(</span>x<span class="hl opt">)</span> <span class="hl kwa">for</span> x <span class="hl kwa">in</span> line<span class="hl opt">.</span><span class="hl kwd">strip</span><span class="hl opt">().</span><span class="hl kwd">split</span><span class="hl opt">(</span>sep<span class="hl opt">=</span><span class="hl sng">&quot;,&quot;</span><span class="hl opt">)]</span>
-<span class="hl lin">   45 </span>
-<span class="hl lin">   46 </span>
-<span class="hl lin">   47 </span><span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
-<span class="hl lin">   48 </span>    <span class="hl kwd">main</span><span class="hl opt">()</span>
+<span class="hl lin">   40 </span>    <span class="hl kwa">return</span> <span class="hl kwb">sum</span><span class="hl opt">(</span>fish_count<span class="hl opt">.</span><span class="hl kwd">values</span><span class="hl opt">())</span>
+<span class="hl lin">   41 </span>
+<span class="hl lin">   42 </span>
+<span class="hl lin">   43 </span><span class="hl kwa">def</span> <span class="hl kwd">parse_input</span><span class="hl opt">():</span>
+<span class="hl lin">   44 </span>    with <span class="hl kwb">open</span><span class="hl opt">(</span>FILE<span class="hl opt">)</span> <span class="hl kwa">as</span> lines<span class="hl opt">:</span>
+<span class="hl lin">   45 </span>        <span class="hl kwa">for</span> line <span class="hl kwa">in</span> lines<span class="hl opt">:</span>
+<span class="hl lin">   46 </span>            <span class="hl kwa">return</span> <span class="hl opt">[</span><span class="hl kwb">int</span><span class="hl opt">(</span>x<span class="hl opt">)</span> <span class="hl kwa">for</span> x <span class="hl kwa">in</span> line<span class="hl opt">.</span><span class="hl kwd">strip</span><span class="hl opt">().</span><span class="hl kwd">split</span><span class="hl opt">(</span>sep<span class="hl opt">=</span><span class="hl sng">&quot;,&quot;</span><span class="hl opt">)]</span>
+<span class="hl lin">   47 </span>
+<span class="hl lin">   48 </span>
+<span class="hl lin">   49 </span><span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
+<span class="hl lin">   50 </span>    <span class="hl kwa">print</span><span class="hl opt">(</span><span class="hl kwd">main</span><span class="hl opt">())</span>  <span class="hl slc"># 1770823541496</span>
 </pre>
 </body>
 </html>

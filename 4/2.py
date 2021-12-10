@@ -15,7 +15,7 @@ def main():
 
     boards_winning_last_sum = sum_of_unmarked_fields(boards_wining_last, draws_winning_last)
 
-    print(boards_winning_last_sum * draws_winning_last_number)  # 7686
+    return boards_winning_last_sum * draws_winning_last_number
 
 
 def get_last_winning_board_and_draw(boards_all, draws_all):
@@ -140,4 +140,4 @@ def sum_of_unmarked_fields(board, draws):
 
 
 if __name__ == '__main__':
-    main()
+    print(main())  # 7686

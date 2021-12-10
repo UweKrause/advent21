@@ -3,6 +3,11 @@ FILE = "input"
 
 
 def main():
+    """
+    This is a naive approach.
+    It works well enough for small numbers, but fails for more days to simulate.
+    See solution 2 for a better way!
+    """
     state = parse_input()
 
     for day in range(1, days_to_simulate + 1):
@@ -17,7 +22,7 @@ def main():
 
         # print(f"after {day} days", state)
 
-    print(len(state))  # 396210
+    return len(state)
 
 
 def parse_input():
@@ -27,4 +32,4 @@ def parse_input():
 
 
 if __name__ == '__main__':
-    main()
+    print(main())  # 396210

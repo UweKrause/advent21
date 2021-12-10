@@ -8,29 +8,36 @@
 <body class="hl">
 <pre class="hl"><span class="hl lin">    1 </span><span class="hl kwa">import</span> pandas <span class="hl kwa">as</span> pd
 <span class="hl lin">    2 </span>
-<span class="hl lin">    3 </span><span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
-<span class="hl lin">    4 </span>    df <span class="hl opt">=</span> pd<span class="hl opt">.</span><span class="hl kwd">read_csv</span><span class="hl opt">(</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">,</span> names<span class="hl opt">=[</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">],</span> dtype<span class="hl opt">=</span><span class="hl kwb">str</span><span class="hl opt">)</span>
+<span class="hl lin">    3 </span>FILE <span class="hl opt">=</span> <span class="hl sng">&quot;input&quot;</span>
+<span class="hl lin">    4 </span>
 <span class="hl lin">    5 </span>
-<span class="hl lin">    6 </span>    col_length <span class="hl opt">=</span> <span class="hl kwb">len</span><span class="hl opt">(</span>df<span class="hl opt">[</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">][</span><span class="hl num">0</span><span class="hl opt">])</span>
-<span class="hl lin">    7 </span>
-<span class="hl lin">    8 </span>    <span class="hl slc"># add one column for every character</span>
-<span class="hl lin">    9 </span>    <span class="hl kwa">for</span> pos_str <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span>col_length<span class="hl opt">):</span>
-<span class="hl lin">   10 </span>        df<span class="hl opt">[</span>pos_str<span class="hl opt">] =</span> df<span class="hl opt">[</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">].</span><span class="hl kwb">str</span><span class="hl opt">[</span>pos_str<span class="hl opt">]</span>
-<span class="hl lin">   11 </span>
-<span class="hl lin">   12 </span>    <span class="hl slc"># find the most common bit in each column and add it to the string containing the most common bits</span>
-<span class="hl lin">   13 </span>    bits_most_common <span class="hl opt">=</span> <span class="hl sng">&quot;&quot;</span>
-<span class="hl lin">   14 </span>    <span class="hl kwa">for</span> pos_str <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span>col_length<span class="hl opt">):</span>
-<span class="hl lin">   15 </span>        bits_most_common <span class="hl opt">+=</span> df<span class="hl opt">[</span>pos_str<span class="hl opt">].</span><span class="hl kwd">mode</span><span class="hl opt">()[</span><span class="hl num">0</span><span class="hl opt">]</span>
-<span class="hl lin">   16 </span>
-<span class="hl lin">   17 </span>    <span class="hl slc"># &quot;flip&quot; &quot;bits&quot;</span>
-<span class="hl lin">   18 </span>    bits_least_common <span class="hl opt">=</span> <span class="hl sng">&#39;&#39;</span><span class="hl opt">.</span><span class="hl kwd">join</span><span class="hl opt">(</span><span class="hl sng">&#39;1&#39;</span> <span class="hl kwa">if</span> x <span class="hl opt">==</span> <span class="hl sng">&#39;0&#39;</span> <span class="hl kwa">else</span> <span class="hl sng">&#39;0&#39;</span> <span class="hl kwa">for</span> x <span class="hl kwa">in</span> bits_most_common<span class="hl opt">)</span>
+<span class="hl lin">    6 </span><span class="hl kwa">def</span> <span class="hl kwd">main</span><span class="hl opt">():</span>
+<span class="hl lin">    7 </span>    df <span class="hl opt">=</span> pd<span class="hl opt">.</span><span class="hl kwd">read_csv</span><span class="hl opt">(</span>FILE<span class="hl opt">,</span> names<span class="hl opt">=[</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">],</span> dtype<span class="hl opt">=</span><span class="hl kwb">str</span><span class="hl opt">)</span>
+<span class="hl lin">    8 </span>
+<span class="hl lin">    9 </span>    col_length <span class="hl opt">=</span> <span class="hl kwb">len</span><span class="hl opt">(</span>df<span class="hl opt">[</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">][</span><span class="hl num">0</span><span class="hl opt">])</span>
+<span class="hl lin">   10 </span>
+<span class="hl lin">   11 </span>    <span class="hl slc"># add one column for every character</span>
+<span class="hl lin">   12 </span>    <span class="hl kwa">for</span> pos_str <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span>col_length<span class="hl opt">):</span>
+<span class="hl lin">   13 </span>        df<span class="hl opt">[</span>pos_str<span class="hl opt">] =</span> df<span class="hl opt">[</span><span class="hl sng">&quot;input&quot;</span><span class="hl opt">].</span><span class="hl kwb">str</span><span class="hl opt">[</span>pos_str<span class="hl opt">]</span>
+<span class="hl lin">   14 </span>
+<span class="hl lin">   15 </span>    <span class="hl slc"># find the most common bit in each column and add it to the string containing the most common bits</span>
+<span class="hl lin">   16 </span>    bits_most_common <span class="hl opt">=</span> <span class="hl sng">&quot;&quot;</span>
+<span class="hl lin">   17 </span>    <span class="hl kwa">for</span> pos_str <span class="hl kwa">in</span> <span class="hl kwb">range</span><span class="hl opt">(</span>col_length<span class="hl opt">):</span>
+<span class="hl lin">   18 </span>        bits_most_common <span class="hl opt">+=</span> df<span class="hl opt">[</span>pos_str<span class="hl opt">].</span><span class="hl kwd">mode</span><span class="hl opt">()[</span><span class="hl num">0</span><span class="hl opt">]</span>
 <span class="hl lin">   19 </span>
-<span class="hl lin">   20 </span>    rate_epsilon <span class="hl opt">=</span> <span class="hl kwb">int</span><span class="hl opt">(</span>bits_most_common<span class="hl opt">,</span> <span class="hl num">2</span><span class="hl opt">)</span>
-<span class="hl lin">   21 </span>    rate_gamma <span class="hl opt">=</span> <span class="hl kwb">int</span><span class="hl opt">(</span>bits_least_common<span class="hl opt">,</span> <span class="hl num">2</span><span class="hl opt">)</span>
+<span class="hl lin">   20 </span>    <span class="hl slc"># &quot;flip&quot; &quot;bits&quot;</span>
+<span class="hl lin">   21 </span>    bits_least_common <span class="hl opt">=</span> <span class="hl sng">&#39;&#39;</span><span class="hl opt">.</span><span class="hl kwd">join</span><span class="hl opt">(</span><span class="hl sng">&#39;1&#39;</span> <span class="hl kwa">if</span> x <span class="hl opt">==</span> <span class="hl sng">&#39;0&#39;</span> <span class="hl kwa">else</span> <span class="hl sng">&#39;0&#39;</span> <span class="hl kwa">for</span> x <span class="hl kwa">in</span> bits_most_common<span class="hl opt">)</span>
 <span class="hl lin">   22 </span>
-<span class="hl lin">   23 </span>    power_consumption <span class="hl opt">=</span> rate_epsilon <span class="hl opt">*</span> rate_gamma
-<span class="hl lin">   24 </span>
-<span class="hl lin">   25 </span>    <span class="hl kwa">print</span><span class="hl opt">(</span>power_consumption<span class="hl opt">)</span>  <span class="hl slc"># 2498354</span>
+<span class="hl lin">   23 </span>    rate_epsilon <span class="hl opt">=</span> <span class="hl kwb">int</span><span class="hl opt">(</span>bits_most_common<span class="hl opt">,</span> <span class="hl num">2</span><span class="hl opt">)</span>
+<span class="hl lin">   24 </span>    rate_gamma <span class="hl opt">=</span> <span class="hl kwb">int</span><span class="hl opt">(</span>bits_least_common<span class="hl opt">,</span> <span class="hl num">2</span><span class="hl opt">)</span>
+<span class="hl lin">   25 </span>
+<span class="hl lin">   26 </span>    power_consumption <span class="hl opt">=</span> rate_epsilon <span class="hl opt">*</span> rate_gamma
+<span class="hl lin">   27 </span>
+<span class="hl lin">   28 </span>    <span class="hl kwa">return</span> power_consumption
+<span class="hl lin">   29 </span>
+<span class="hl lin">   30 </span>
+<span class="hl lin">   31 </span><span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
+<span class="hl lin">   32 </span>    <span class="hl kwa">print</span><span class="hl opt">(</span><span class="hl kwd">main</span><span class="hl opt">())</span>  <span class="hl slc"># 2498354</span>
 </pre>
 </body>
 </html>

@@ -2,7 +2,8 @@ import pandas as pd
 
 FILE = "input"
 
-if __name__ == '__main__':
+
+def main():
     df = pd.read_csv(FILE, names=["input"], dtype=str)
 
     col_length = len(df["input"][0])
@@ -24,4 +25,8 @@ if __name__ == '__main__':
 
     power_consumption = rate_epsilon * rate_gamma
 
-    print(power_consumption)  # 2498354
+    return power_consumption
+
+
+if __name__ == '__main__':
+    print(main())  # 2498354

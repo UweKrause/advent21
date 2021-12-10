@@ -23,7 +23,7 @@ def main():
 
         movement[pos] = sum(pos_fuel.values())
 
-    print(min(movement.values()))
+    return min(movement.values())
 
 
 def parse_input():
@@ -33,4 +33,4 @@ def parse_input():
 
 
 if __name__ == '__main__':
-    main()
+    print(main()) # 341534

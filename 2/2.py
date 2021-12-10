@@ -2,7 +2,8 @@ import pandas as pd
 
 FILE = "input"
 
-if __name__ == '__main__':
+
+def main():
     df = pd.read_csv(FILE, names=["direction", "value"], sep=" ")
 
     aim = 0
@@ -21,4 +22,8 @@ if __name__ == '__main__':
             position_horizontal += value
             position_depth += aim * value
 
-    print(position_horizontal * position_depth)  # 1856459736
+    return position_horizontal * position_depth
+
+
+if __name__ == '__main__':
+    print(main())  # 1856459736

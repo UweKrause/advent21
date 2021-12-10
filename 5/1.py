@@ -20,7 +20,7 @@ def main():
 
     cells_with_more_than_one_vent = np.count_nonzero(field > 1)
 
-    print(cells_with_more_than_one_vent)  # 8111
+    return cells_with_more_than_one_vent
 
 
 def parse_input():
@@ -83,4 +83,4 @@ def highest(highest_x, highest_y, x1, x2, y1, y2):
 
 
 if __name__ == '__main__':
-    main()
+    print(main())  # 8111
