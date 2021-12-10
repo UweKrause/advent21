@@ -2,6 +2,8 @@ from itertools import islice
 
 import numpy as np
 
+FILE = "input"
+
 
 def main():
     draws_all, boards_all = parse_input()
@@ -81,7 +83,7 @@ def get_winning_boards_and_draws(boards_all, draws_all):
 def parse_input():
     """parse input to numbers drawn and boards available"""
 
-    with open("input") as lines:
+    with open(FILE) as lines:
 
         # first line contains all draws
         draws_all = [int(x) for x in lines.readline().split(sep=",")]

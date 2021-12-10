@@ -1,7 +1,9 @@
 import pandas as pd
 
+FILE = "input"
+
 if __name__ == '__main__':
-    df = pd.read_csv("input", names=["direction", "value"], sep=" ")
+    df = pd.read_csv(FILE, names=["direction", "value"], sep=" ")
     grouped = df.groupby(["direction"]).sum()
 
     up = grouped["value"].get("up", 0)

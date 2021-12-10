@@ -2,6 +2,8 @@ import re
 
 import numpy as np
 
+FILE = "input"
+
 
 def main():
     highest_x, highest_y, vents = parse_input()
@@ -18,7 +20,7 @@ def main():
 
     cells_with_more_than_one_vent = np.count_nonzero(field > 1)
 
-    print(cells_with_more_than_one_vent)
+    print(cells_with_more_than_one_vent)  # 8111
 
 
 def parse_input():
@@ -26,7 +28,7 @@ def parse_input():
     highest_y = 0
     vents = []
 
-    with open("input") as lines:
+    with open(FILE) as lines:
         for line in lines:
             regex = re.compile(r'(\d+),(\d+)+ -> (\d+)+,(\d+)+')
             regex_groups = regex.search(line.strip())

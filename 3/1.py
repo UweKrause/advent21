@@ -1,7 +1,9 @@
 import pandas as pd
 
+FILE = "input"
+
 if __name__ == '__main__':
-    df = pd.read_csv("input", names=["input"], dtype=str)
+    df = pd.read_csv(FILE, names=["input"], dtype=str)
 
     col_length = len(df["input"][0])
 

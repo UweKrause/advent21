@@ -1,3 +1,5 @@
+FILE = "input"
+
 days_to_simulate = 256
 
 
@@ -39,7 +41,7 @@ def main():
 
 
 def parse_input():
-    with open("input") as lines:
+    with open(FILE) as lines:
         for line in lines:
             return [int(x) for x in line.strip().split(sep=",")]
 
