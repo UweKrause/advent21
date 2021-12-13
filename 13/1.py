@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 
-FILE = "example"
+FILE = "input"
 
 
 def main():
