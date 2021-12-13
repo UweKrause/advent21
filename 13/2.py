@@ -2,7 +2,13 @@ import math
 
 import numpy as np
 
-FILE = "example"
+FILE = "input"
+
+"""
+Changes from part 1:
+- Dont break after the first fold
+- print the result instead of calculate dots
+"""
 
 
 def main():
@@ -12,9 +18,7 @@ def main():
 
     state = fold_it(folds, state)
 
-    visible_dots = count_dots(state)
-
-    return visible_dots
+    return state
 
 
 def parse_input():
@@ -65,9 +69,6 @@ def fold_it(folds, state):
         if axis == "x":
             state = fold_left(state, pos)
 
-        # only one fold for now
-        break
-
     return state
 
 
@@ -89,10 +90,6 @@ def fold_left(arr, pos):
 
     # return only the left halve
     return np.split(stack, (0, int(pos)), axis=1)[1]
-
-
-def count_dots(state):
-    return len(np.argwhere(state))
 
 
 if __name__ == '__main__':
