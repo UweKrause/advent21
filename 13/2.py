@@ -5,6 +5,9 @@ import numpy as np
 FILE = "input"
 
 """
+Prints the folded instruction.
+Is not really readable, what did I do wrong???
+
 Changes from part 1:
 - Dont break after the first fold
 - print the result instead of calculate dots
