@@ -12,9 +12,7 @@ def main():
 
     basins = get_basins(heightmap, points_low)
 
-    basins_largest_3 = get_largest_basins(basins, 3)
-
-    return math.prod(basins_largest_3)
+    return math.prod(get_largest_basins(basins, 3))
 
 
 def get_largest_basins(basins, n):
