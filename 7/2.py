@@ -1,3 +1,4 @@
+import functools
 from collections import defaultdict
 
 FILE = "input"
@@ -18,8 +19,8 @@ def main():
         pos_fuel = defaultdict(int)
 
         for crab in crabs:
-            diff = max(crab, pos) - min(crab, pos)
-            fuel = sum(range(diff + 1))
+            diff = get_diff(crab, pos)
+            fuel = calculate_distance(diff)
 
             # print(f"move from {crab} to {pos}: {fuel} fuel")
             pos_fuel[pos] += fuel
@@ -29,6 +30,16 @@ def main():
         movement[pos] = sum(pos_fuel.values())
 
     return min(movement.values())
+
+
+@functools.cache
+def get_diff(crab, pos):
+    return max(crab, pos) - min(crab, pos)
+
+
+@functools.cache
+def calculate_distance(diff):
+    return sum(range(diff + 1))
 
 
 def parse_input():
