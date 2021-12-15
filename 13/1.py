@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 
-FILE = "input"
+FILE = "example"
 
 
 def main():
@@ -45,17 +45,19 @@ def create_map(dots):
         max_x = max(max_x, x)
         max_y = max(max_y, y)
 
-    shape = (max_x + 1, max_y + 1)
+    shape = (max_y + 1, max_x + 1)
 
     a = np.zeros(shape=shape, dtype=int)
 
     for x, y in dots:
-        a[x][y] = 1
+        a[y][x] = 1
 
-    return a.transpose()
+    return a
 
 
 def fold_it(folds, state):
+    print(state)
+
     for fold in folds:
         axis, pos = fold.split("=")
 

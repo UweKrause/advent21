@@ -52,14 +52,14 @@ def create_map(dots):
         max_x = max(max_x, x)
         max_y = max(max_y, y)
 
-    shape = (max_x + 1, max_y + 1)
+    shape = (max_y + 1, max_x + 1)
 
-    a = np.zeros(shape=shape, dtype=int)
+    a = np.zeros(shape=shape, dtype=bool)
 
     for x, y in dots:
-        a[x][y] = 1
+        a[y][x] = True
 
-    return a.transpose()
+    return a
 
 
 def fold_it(folds, state):
@@ -96,4 +96,13 @@ def fold_left(arr, pos):
 
 
 if __name__ == '__main__':
-    print(main())
+    output = main()
+
+    for y in output:
+        for x in y:
+            if x:
+                print("X", end="")
+            else:
+                print(" ", end="")
+
+        print()

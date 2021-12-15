@@ -60,14 +60,14 @@
 <span class="hl lin">   52 </span>        max_x <span class="hl opt">=</span> <span class="hl kwb">max</span><span class="hl opt">(</span>max_x<span class="hl opt">,</span> x<span class="hl opt">)</span>
 <span class="hl lin">   53 </span>        max_y <span class="hl opt">=</span> <span class="hl kwb">max</span><span class="hl opt">(</span>max_y<span class="hl opt">,</span> y<span class="hl opt">)</span>
 <span class="hl lin">   54 </span>
-<span class="hl lin">   55 </span>    shape <span class="hl opt">= (</span>max_x <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">,</span> max_y <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">)</span>
+<span class="hl lin">   55 </span>    shape <span class="hl opt">= (</span>max_y <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">,</span> max_x <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">)</span>
 <span class="hl lin">   56 </span>
-<span class="hl lin">   57 </span>    a <span class="hl opt">=</span> np<span class="hl opt">.</span><span class="hl kwd">zeros</span><span class="hl opt">(</span>shape<span class="hl opt">=</span>shape<span class="hl opt">,</span> dtype<span class="hl opt">=</span><span class="hl kwb">int</span><span class="hl opt">)</span>
+<span class="hl lin">   57 </span>    a <span class="hl opt">=</span> np<span class="hl opt">.</span><span class="hl kwd">zeros</span><span class="hl opt">(</span>shape<span class="hl opt">=</span>shape<span class="hl opt">,</span> dtype<span class="hl opt">=</span><span class="hl kwb">bool</span><span class="hl opt">)</span>
 <span class="hl lin">   58 </span>
 <span class="hl lin">   59 </span>    <span class="hl kwa">for</span> x<span class="hl opt">,</span> y <span class="hl kwa">in</span> dots<span class="hl opt">:</span>
-<span class="hl lin">   60 </span>        a<span class="hl opt">[</span>x<span class="hl opt">][</span>y<span class="hl opt">] =</span> <span class="hl num">1</span>
+<span class="hl lin">   60 </span>        a<span class="hl opt">[</span>y<span class="hl opt">][</span>x<span class="hl opt">] =</span> <span class="hl kwa">True</span>
 <span class="hl lin">   61 </span>
-<span class="hl lin">   62 </span>    <span class="hl kwa">return</span> a<span class="hl opt">.</span><span class="hl kwd">transpose</span><span class="hl opt">()</span>
+<span class="hl lin">   62 </span>    <span class="hl kwa">return</span> a
 <span class="hl lin">   63 </span>
 <span class="hl lin">   64 </span>
 <span class="hl lin">   65 </span><span class="hl kwa">def</span> <span class="hl kwd">fold_it</span><span class="hl opt">(</span>folds<span class="hl opt">,</span> state<span class="hl opt">):</span>
@@ -104,7 +104,16 @@
 <span class="hl lin">   96 </span>
 <span class="hl lin">   97 </span>
 <span class="hl lin">   98 </span><span class="hl kwa">if</span> __name__ <span class="hl opt">==</span> <span class="hl sng">&#39;__main__&#39;</span><span class="hl opt">:</span>
-<span class="hl lin">   99 </span>    <span class="hl kwa">print</span><span class="hl opt">(</span><span class="hl kwd">main</span><span class="hl opt">())</span>
+<span class="hl lin">   99 </span>    output <span class="hl opt">=</span> <span class="hl kwd">main</span><span class="hl opt">()</span>
+<span class="hl lin">  100 </span>
+<span class="hl lin">  101 </span>    <span class="hl kwa">for</span> y <span class="hl kwa">in</span> output<span class="hl opt">:</span>
+<span class="hl lin">  102 </span>        <span class="hl kwa">for</span> x <span class="hl kwa">in</span> y<span class="hl opt">:</span>
+<span class="hl lin">  103 </span>            <span class="hl kwa">if</span> x<span class="hl opt">:</span>
+<span class="hl lin">  104 </span>                <span class="hl kwa">print</span><span class="hl opt">(</span><span class="hl sng">&quot;X&quot;</span><span class="hl opt">,</span> end<span class="hl opt">=</span><span class="hl sng">&quot;&quot;</span><span class="hl opt">)</span>
+<span class="hl lin">  105 </span>            <span class="hl kwa">else</span><span class="hl opt">:</span>
+<span class="hl lin">  106 </span>                <span class="hl kwa">print</span><span class="hl opt">(</span><span class="hl sng">&quot; &quot;</span><span class="hl opt">,</span> end<span class="hl opt">=</span><span class="hl sng">&quot;&quot;</span><span class="hl opt">)</span>
+<span class="hl lin">  107 </span>
+<span class="hl lin">  108 </span>        <span class="hl kwa">print</span><span class="hl opt">()</span>
 </pre>
 </body>
 </html>
