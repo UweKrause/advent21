@@ -66,23 +66,15 @@ def check_rows(board, draws):
     Checks for the rows of a board, if they are fully drawn.
     If a (complete) row is a subset of the drawn numbers, it was fully drawn.
     """
-    for row in board:
-        assert len(set(row)) == 5
-        if set(row).issubset(draws):
-            return True
-    return False
+
+    # empty array is falsy, filled array is truthy
+    return bool([row for row in board if set(row).issubset(draws)])
 
 
 def sum_of_unmarked_fields(board, draws):
     """calculate the sum of all unmarked numbers of a winning board"""
-    # todo: list comprehension
 
-    unmarked = []
-    for item in board.flat:
-        if item not in draws:
-            unmarked.append(item)
-
-    return sum(unmarked)
+    return sum([item for item in board.flat if item not in draws])
 
 
 if __name__ == '__main__':
