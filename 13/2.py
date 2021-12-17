@@ -52,7 +52,7 @@ def create_map(dots):
         max_x = max(max_x, x)
         max_y = max(max_y, y)
 
-    shape = (max_y + 1, max_x + 1)
+    shape = (max_y + 2, max_x + 1)
 
     a = np.zeros(shape=shape, dtype=bool)
 
