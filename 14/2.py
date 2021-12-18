@@ -2,7 +2,11 @@ from collections import defaultdict
 
 FILE = "input"
 
-STEPS = 10
+STEPS = 40
+
+"""
+Code for Part 2 is exactly the same as for 1.
+"""
 
 
 def main():
@@ -98,4 +102,4 @@ def parse_input():
 
 
 if __name__ == '__main__':
-    print(main())  # 3058
+    print(main())  # 3447389044530
