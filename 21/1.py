@@ -1,6 +1,6 @@
 position_player = {
-    1: 4,
-    2: 8
+    1: 8,
+    2: 7
 }
 
 score = {
@@ -59,4 +59,4 @@ def next_dice(start, steps):
 
 
 if __name__ == '__main__':
-    print(main())
+    print(main())  # 506466
