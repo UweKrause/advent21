@@ -1,61 +1,71 @@
-position_player = {
-    1: 8,
-    2: 7
-}
-
-score = {
-    1: 0,
-    2: 0
-}
+import functools
+from collections import defaultdict  # <3
 
 players = [1, 2]
+
+position_on_board = {
+    1: 8,
+    2: 7,
+}
+
+SCORE_CAP = 1000
+DICE_THROWS_PER_ROUND = 3
+
+score = defaultdict(int)
+
+# initially score for one player.
+# Will grow for the other players
+score[1] = 0
 
 
 def main():
     round = 0
     dice_state = 0
 
-    while score[1] < 1000 and score[2] < 1000:
+    while max(score.values()) < SCORE_CAP:
 
-        player = players[dice_state % len(players)]
+        player = current_player(round)
 
-        progress = []
-        for _ in range(3):
-            dice_state = next_dice(dice_state, 1)
+        dice_throws = []
+        for _ in range(DICE_THROWS_PER_ROUND):
             round += 1
-            progress.append(dice_state)
+            dice_state = next_dice(dice_state)
+            dice_throws.append(dice_state)
 
-        steps = sum(progress)
+        steps = sum(dice_throws)
 
-        pos_new = move(position_player[player], steps)
+        position_on_board[player] = move(position_on_board[player], steps)
 
-        position_player[player] = pos_new
-        score[player] += pos_new
+        score[player] += position_on_board[player]
 
-        # print(f"Player {player} rolls {progress}"
-        #       f" and moves to space {position_player[player]}"
+        # print(f"Player {player} rolls {dice_throws}"
+        #       f" and moves to space {position_on_board[player]}"
         #       f" for a total score of {score[player]}")
 
-    looser_points = min(score[1], score[2])
-
-    return looser_points * round
+    return min(score[1], score[2]) * round
 
 
+def current_player(round):
+    return int(wrap(round / DICE_THROWS_PER_ROUND, 1, len(players)))
+
+
+@functools.cache  # although not necessary, doesnt hurt
 def move(start, steps):
-    pos = (start + steps) % 10
-    if pos == 0:
-        return 10
-
-    return pos
+    return wrap(start, steps, 10)
 
 
-def next_dice(start, steps):
-    wrap = 100
-    pos = (start + steps) % wrap
-    if pos == 0:
-        return wrap
+def next_dice(start):
+    return wrap(start, 1, 100)
 
-    return pos
+
+def wrap(start, steps, where_to_wrap):
+    """
+    Performs the modulo-operation different:
+    If the remainder is 0, return the end of the allowed range.
+    (I am open to better suggestions)
+    """
+    value = (start + steps) % where_to_wrap
+    return where_to_wrap if value == 0 else value
 
 
 if __name__ == '__main__':
