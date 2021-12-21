@@ -6,7 +6,9 @@ FILE = "input"
 
 def main():
     """
-    naive implementation, works, but takes ~20 Seconds on my machine
+    Naive implementation, works.
+    Would take ~20 Seconds on my machine without memoization.
+    Reduced to ~3 seconds with @functools.cache
     """
     crabs = parse_input()
 
