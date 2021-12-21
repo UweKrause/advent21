@@ -6,7 +6,6 @@ FILE = "input"
 
 """
 Prints the folded instruction.
-Is not really readable, what did I do wrong???
 
 Changes from part 1:
 - Dont break after the first fold
@@ -52,7 +51,7 @@ def create_map(dots):
         max_x = max(max_x, x)
         max_y = max(max_y, y)
 
-    shape = (max_y + 2, max_x + 1)
+    shape = (max_y + 2, max_x + 1)  # don't ask me why 2
 
     a = np.zeros(shape=shape, dtype=bool)
 
@@ -101,7 +100,7 @@ if __name__ == '__main__':
     for y in output:
         for x in y:
             if x:
-                print("X", end="")
+                print("#", end="")
             else:
                 print(" ", end="")
 

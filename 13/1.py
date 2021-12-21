@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 
-FILE = "example"
+FILE = "input"
 
 
 def main():
@@ -56,8 +56,6 @@ def create_map(dots):
 
 
 def fold_it(folds, state):
-    print(state)
-
     for fold in folds:
         axis, pos = fold.split("=")
 
@@ -98,4 +96,4 @@ def count_dots(state):
 
 
 if __name__ == '__main__':
-    print(main())
+    print(main())  # 785
